@@ -1,36 +1,14 @@
-s = input()  
-vowels = "aeiou"
+txt = input()
+done = {'a', 'u', 'e', 'i', 'o'}
+count = 0
 result = []
-count = 0  
-skip_next = False 
 
-i = 0
-while i < len(s):
-    if skip_next:  
-        result.append(s[i])
-        skip_next = False
-        i += 1
-        count += 1
-        continue
-
-    result.append(s[i])
-    count += 1
-    
-    if count == 3:  
-        if s[i] in vowels:
-            if i + 1 < len(s):  
-                result.append(s[i + 1])  
-                result.append("_")  
-                skip_next = True  
-                i += 1  
-        else:
-            result.append("_")
-        
-        count = 0  
-    
-    i += 1
-
+for x in range(len(txt)): #iterate through elements of string(txt)
+    count+=1 # counts every third element
+    result.append(txt[x]) # adds the element - the reason of writing this code in this line earlier is that underscore always is added after the elemet
+    if x!=len(txt)-1 and count>=3 and txt[x] not in done:
+        done.add(txt[x])
+        result.append("_")
+        count=0
 
 print("".join(result))
-
-
