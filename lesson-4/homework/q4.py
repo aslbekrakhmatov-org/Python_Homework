@@ -1,21 +1,11 @@
 import random
 comp_num = random.randint(1,100)
-guesses = 1
-answers = ['Y', 'YES', 'y', 'yes', 'ok']
-while True:
-    if guesses>10:
-        print("You lost")
-        answer = input("Do you want to play again? ")
-        
-        if answer in answers:
-            guesses = 1    
-        else:
-            print("Game is over")
-            break
 
-    else:        
+answers = ['Y', 'YES', 'y', 'yes', 'ok']
+
+while True:
+    for x in range(10):
         human_num = int(input("Enter number between 1 and 100: "))
-        guesses+=1
         
         if human_num>comp_num:
             print("Too high!")
@@ -24,6 +14,7 @@ while True:
         else:
             print("You guessed it right!")
             break
-
-
-
+    print("You are lost. Do you want to play again? ")
+    answer = input()
+    if answer not in answers:
+        break
