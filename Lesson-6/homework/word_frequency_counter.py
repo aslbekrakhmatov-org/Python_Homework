@@ -1,3 +1,4 @@
+from collections import Counter
 def word_count(text):
     try:
         with open(text) as file:
@@ -10,18 +11,11 @@ def word_count(text):
         content = txt
     puncs = "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"
     content = content.lower().translate(str.maketrans("", "", puncs)).split()
-    words = []
-    frequency_list = []
-    for i in content:
-        if i not in words:
-            words.append(i)
-            frequency = content.count(i)
-            frequency_list.append(frequency)
     
-    words_dict = dict(zip(words, frequency_list))
+    words_dict = Counter(content)
     sorted_dict = dict(sorted(words_dict.items(), key= lambda x : x[1], reverse=True))
         
-    total_words = sum(frequency_list)
+    total_words = sum(sorted_dict.values())
     print(f"Total words: {total_words}")
     try:
         top_words = int(input("How many top common words do you want see?_ "))
