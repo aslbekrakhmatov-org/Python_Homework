@@ -21,7 +21,7 @@ class Task:
     
     @staticmethod
     def from_dict(data):
-        return Task(data["Task ID"], data["Title"], data["Description", data.get("Due Date"), data["Status"]])
+        return Task(data["Task ID"], data["Title"], data["Description"], data.get("Due Date"), data["Status"])
 
 class FileStoring(ABC):
     @abstractmethod
@@ -29,7 +29,7 @@ class FileStoring(ABC):
         pass
 
     @abstractmethod
-    def load(self,tasks):
+    def load(self):
         pass
 
 class CSVFileStoring(FileStoring):
@@ -79,47 +79,53 @@ class ToDoProg:
 
     def add_task(self, task):
         self.tasks.append(task)
-        print("task is added succesfully")
-    
+        print("Task added successfully.")
+
     def view_tasks(self):
-        for task in self.tasks:
-            print(task.to_dict())
-    
-    def update_task(self, task_id, title=None, description=None, due_date=None, status=None):
+        if self.tasks:
+            for task in self.tasks:
+                print(task.to_dict()) 
+        else:
+            print("No tasks yet")
+
+    def update_task(self, task_id, title=None, description = None, due_date = None, status = None):
         for task in self.tasks:
             if task.task_id == task_id:
                 if title:
                     task.title = title
                 if description:
-                    task.description = description
+                    task.task_desc = description
                 if due_date:
                     task.due_date = due_date
                 if status:
                     task.status = status
-                print("Task updated successfully!")
+                print("Task is updated successfully!")
                 return
-        print("Task not found!")
+            else:
+                print("Task with this ID is non found!")
     
     def delete_task(self, task_id):
         self.tasks = [task for task in self.tasks if task.task_id != task_id]
-        print("Task deleted successfully!")
+        print("Task with this ID deleted successfully!")
     
     def filter_tasks(self, status):
         filtered_tasks = [task for task in self.tasks if task.status == status]
         for task in filtered_tasks:
             print(task.to_dict())
-    
+
     def save_tasks(self):
         self.file_storing.save(self.tasks)
-        print("Tasks saved successfully!")
+        print("Tasks saved successfully")
+
+    
 
 
 if __name__ == "__main__":
-    storage = JSONFileStoring()  
+    storage = CSVFileStoring()
     app = ToDoProg(storage)
-    
+
     while True:
-        print("\nWelcome to the To-Do Application!")
+        print("<b>To-Do application</b>")
         print("1. Add a new task")
         print("2. View all tasks")
         print("3. Update a task")
@@ -127,38 +133,38 @@ if __name__ == "__main__":
         print("5. Filter tasks by status")
         print("6. Save tasks")
         print("7. Exit")
-        choice = input("Enter your choice: ")
+
+        choice = int(input("Choose option: "))
         try:
-            if choice == '1':
+            if choice == 1:
                 task_id = input("Enter Task ID: ")
                 title = input("Enter Title: ")
-                description = input("Enter Description: ")
+                task_desc = input("Enter Description: ")
                 due_date = input("Enter Due Date (YYYY-MM-DD, optional): ") or None
                 status = input("Enter Status (In Progress/Completed): ")
-                app.add_task(Task(task_id, title, description, due_date, status))
-            elif choice == '2':
+                new_task = Task(task_id, title, task_desc, due_date, status)
+                app.add_task(new_task)
+            elif choice ==2:
                 app.view_tasks()
-            elif choice == '3':
-                task_id = input("Enter Task ID to update: ")
-                title = input("Enter new Title (or press Enter to skip): ") or None
-                description = input("Enter new Description (or press Enter to skip): ") or None
-                due_date = input("Enter new Due Date (YYYY-MM-DD, or press Enter to skip): ") or None
-                status = input("Enter new Status (Pending/In Progress/Completed, or press Enter to skip): ") or None
-                app.update_task(task_id, title, description, due_date, status)
-            elif choice == '4':
-                task_id = input("Enter Task ID to delete: ")
+            elif choice ==3:
+                task_id = input("Enter Task ID: ")
+                title_updt = input("Enter Title: ") or None
+                task_desc_updt = input("Enter Description: ") or None
+                due_date_updt = input("Enter Due Date (YYYY-MM-DD, optional): ") or None
+                status_updt = input("Enter Status (In Progress/Completed): ") or None
+                app.update_task(task_id, title_updt, task_desc_updt, due_date_updt, status_updt)
+            elif choice ==4:
+                task_id = input("Enter TAsk ID: ")
                 app.delete_task(task_id)
-            elif choice == '5':
-                status = input("Enter Status to filter by (In Progress/Completed): ")
+            elif choice ==5:
+                status = input("Enter the status for filter(In progress/Completed)")
                 app.filter_tasks(status)
-            elif choice == '6':
+            elif choice==6:
                 app.save_tasks()
-            elif choice == '7':
+            elif choice==7:
+                print("App is closed!")
                 break
             else:
                 print("Invalid choice, please try again.")
         except ValueError:
             print("Invalid Value, please enter number!")
-
-
-        
