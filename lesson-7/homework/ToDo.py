@@ -37,7 +37,7 @@ class CSVFileStoring(FileStoring):
         self.filename = filename
 
     def save(self, tasks):
-        with open(self.filename, 'w', newline="") as file:
+        with open(self.filename, '', newline="") as file:
             writer = csv.DictWriter(file, fieldnames=["Task ID", "Title", "Description", "Due Date", "Status"])
             writer.writeheader()
             for task in tasks:
