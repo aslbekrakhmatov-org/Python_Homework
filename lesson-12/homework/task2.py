@@ -28,7 +28,7 @@ for card in cards:
     comp = card.find("h3", class_="subtitle is-6 company").text.strip()
     location = card.find("p", class_= "location").text.strip()
     apply_link = card.find("a", string="Apply").get("href")
-    description = card.find("div", class_="content").text.strip()
+    description = " ".join(card.find("div", class_="content").text.split())
     vacancies_data.append((job_title, comp, location, description, apply_link))
 
 with sqlite3.connect("jobs.db") as con:
