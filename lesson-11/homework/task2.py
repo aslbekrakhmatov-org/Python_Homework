@@ -19,13 +19,13 @@ with sqlite3.connect("library.db") as con:
     ]
     cursor = con.cursor()
     query2 = ('''INSERT INTO Books (Title, Author, Year_published, Genre) VALUES(?,?,?,?)''')
-    #cursor.executemany(query2, data)
+    cursor.executemany(query2, data)
     connection.commit()
 
 with sqlite3.connect("library.db") as con:
     cursor = con.cursor()
     query3 = ('''UPDATE Books SET Year_published = ? WHERE Title = ?''')
-    #cursor.execute(query3, (1950, "1984"))
+    cursor.execute(query3, (1950, "1984"))
 
 with sqlite3.connect("library.db") as con:
     cursor = con.cursor()
@@ -33,24 +33,24 @@ with sqlite3.connect("library.db") as con:
     cursor.execute(query4, ("Dystopian",))
     results = cursor.fetchall()
     for row in results:
-        #print(row)
-        pass
+        print(row)
+    
 
 with sqlite3.connect("library.db") as con:
     cursor = con.cursor()
     query5 = ('''DELETE FROM Books WHERE Year_published < ?''')
-    #cursor.execute(query5, ("1950",))
+    cursor.execute(query5, ("1950",))
     con.commit()
 
 with sqlite3.connect("library.db") as con:
     cursor = con.cursor()
     query6 = ('''ALTER TABLE Books ADD COLUMN RATING FLOAT DEFAULT Null''')
-    #cursor.execute(query6)
+    cursor.execute(query6)
 
 with sqlite3.connect("library.db") as con:
     cursor = con.cursor()
     query7 = ('''INSERT INTO Books (Title, Author, Year_published, Genre, Rating) VALUES(?,?,?,?,?)''')
-    #cursor.execute(query7, ("The Great Gatsby", "F. Scott Fitzgerald", 1925, "Classic", "Null"))
+    cursor.execute(query7, ("The Great Gatsby", "F. Scott Fitzgerald", 1925, "Classic", "Null"))
     connection.commit()
  
 with sqlite3.connect("library.db") as con:
@@ -61,7 +61,7 @@ with sqlite3.connect("library.db") as con:
     ]
     cursor = con.cursor()
     query8 = ('''UPDATE Books SET Rating = ? WHERE Title = ?''')
-    #cursor.executemany(query8, updt_data)
+    cursor.executemany(query8, updt_data)
     con.commit()
 
 with sqlite3.connect("library.db") as con:
