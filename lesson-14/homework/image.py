@@ -9,7 +9,7 @@ def flip_image(img):
     flipped_ud_arr = img_arr[::-1]
     flipped_ud_img = Image.fromarray(flipped_ud_arr, mode="RGB")
     flipped_ud_img.save("Python_Homework/lesson-14/homework/images/updown_flipped.jpg")
-    flipped_rl_arr = img_arr[:, ::-1, :]
+    flipped_rl_arr = img_arr[:, ::-1]
     flipped_rl_img = Image.fromarray(flipped_rl_arr, mode="RGB")
     flipped_rl_img.save("Python_Homework/lesson-14/homework/images/rightleft_flipped.jpg")
 
@@ -31,10 +31,10 @@ make_noisy_image("Python_Homework/lesson-14/homework/images/birds.jpg")
 def brighten_channels(img):
     with Image.open("Python_Homework/lesson-14/homework/images/birds.jpg") as image:
         image_arr = np.array(image, dtype=np.float32)
-    image_arr[:, :, 0] = np.clip(image_arr[:, :, 0]+40, 0, 255)
-    brighter_img_arr = image_arr.astype(np.uint8)
-    brighter_img = Image.fromarray(brighter_img_arr, mode="RGB")
-    brighter_img.save("Python_Homework/lesson-14/homework/images/brighter_image.jpg")
+        image_arr[:, :, 0] = np.clip(image_arr[:, :, 0]+40, 0, 255)
+        brighter_img_arr = image_arr.astype(np.uint8)
+        brighter_img = Image.fromarray(brighter_img_arr, mode="RGB")
+        brighter_img.save("Python_Homework/lesson-14/homework/images/brighter_image.jpg")
 brighten_channels("Python_Homework/lesson-14/homework/images/brighter_image.jpg")
 
 # mask
@@ -42,11 +42,11 @@ def mask_make_in_image(img):
     with Image.open(img) as image:
         image_arr = np.array(image, dtype=np.uint8)
     height, width, _ = image_arr.shape 
-    c1 = int(height / 2 - 100)
-    c2 = int(height / 2 + 100)
-    r1 = int(width / 2 - 100)
-    r2 = int(width / 2 + 100)
-    image_arr[c1:c2, r1:r2, :] = 0
+    bottom = int(height / 2 - 100)
+    top = int(height / 2 + 100)
+    left = int(width / 2 - 100)
+    right = int(width / 2 + 100)
+    image_arr[bottom:top, left:right, :] = 0
     mask_image = Image.fromarray(image_arr.astype(np.uint8), mode="RGB")
     mask_image.save("Python_Homework/lesson-14/homework/images/mask_image.jpg")
 mask_make_in_image("Python_Homework/lesson-14/homework/images/birds.jpg")
