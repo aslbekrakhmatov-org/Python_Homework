@@ -1,13 +1,13 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-fig, axes = plt.subplots(2, 2, figsize=(10,10))
+fig, axes = plt.subplots(2, 2, figsize=(8,8))
 
-x = np.linspace(-10, 10, 10)
+x = np.linspace(-10, 10, 100)
 y1 = x**3
 y2 = np.sin(x)
 y3 = np.exp(x)
-y4 = np.log(np.maximum(x + 1, 1e-10))
+y4 = np.log(np.log1p(x))
 
 #top-left
 axes[0, 0].plot(x,y1, label = "$f(x)=x^3$", color = 'b')

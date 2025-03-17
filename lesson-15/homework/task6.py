@@ -9,7 +9,7 @@ y = np.linspace(-5, 5, 100)
 
 xx, yy = np.meshgrid(x,y)
 
-zz = np.cos(xx**2, yy**2)
+zz = np.cos(xx**2 + yy**2)
 
 obj = ax.plot_surface(xx, yy, zz, label = "$f(x)=\cos(x^2+y^2)$", cmap = "plasma")
 fig.colorbar(obj, ax=ax, aspect = 10, shrink = 0.5)
